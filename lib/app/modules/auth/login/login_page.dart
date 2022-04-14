@@ -128,7 +128,7 @@ class LoginPage extends StatelessWidget {
                                 ),
                                 TextButton(
                                   onPressed: () {
-
+                                    Navigator.of(context).pushNamed("/register");
                                   }, 
                                   child: const Text("Cadastre-se"),
                                 ),
