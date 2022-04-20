@@ -23,13 +23,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final _passwordEC = TextEditingController();
   final _confirmPasswordEC = TextEditingController();
 
-  //late final RegisterController _controller;
-
   @override
   void initState() {
     super.initState();
-
-    //_controller = context.read<RegisterController>();
 
     final defaultListener = DefaultListenerNotifier(
       changeNotifier: context.read<RegisterController>(),
@@ -43,7 +39,6 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     );
 
-    //_controller.addListener(_statusListener);
   }
 
   @override
@@ -53,25 +48,10 @@ class _RegisterPageState extends State<RegisterPage> {
     _passwordEC.dispose();
     _confirmPasswordEC.dispose();
 
-    //_controller.removeListener(_statusListener);
+    
 
     super.dispose();
   }
-
-  // void _statusListener() {
-        
-  //   final success = _controller.success;
-  //   final error = _controller.error;
-    
-  //   if(success) {
-  //     Navigator.of(context).pop();
-  //   } else if(error != null && error.isNotEmpty) {
-  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //       content: Text(error),
-  //       backgroundColor: Colors.red,
-  //     ));
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

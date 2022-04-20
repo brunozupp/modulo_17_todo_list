@@ -1,13 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:modulo_17_todo_list/app/core/notifier/default_listener_notifier.dart';
 import 'package:modulo_17_todo_list/app/core/widgets/todo_list_field.dart';
 import 'package:modulo_17_todo_list/app/core/widgets/todo_list_logo.dart';
+import 'package:modulo_17_todo_list/app/modules/auth/login/login_controller.dart';
+import 'package:provider/provider.dart';
+import 'package:validatorless/validatorless.dart';
     
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
 
   const LoginPage({ Key? key }) : super(key: key);
-  
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+
+  final _formKey = GlobalKey<FormState>();
+  final _emailEC = TextEditingController();
+  final _passwordEC = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    DefaultListenerNotifier(
+      changeNotifier: context.read<LoginController>(),
+    ).listener(
+      context: context, 
+      successCallback: (notifier, listenerNotifier) {
+        listenerNotifier.dispose();
+      }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +62,16 @@ class LoginPage extends StatelessWidget {
                         vertical: 20,
                       ),
                       child: Form(
+                        key: _formKey,
                         child: Column(
                           children: [
                             TodoListField(
+                              controller: _emailEC,
                               label: "Email",
+                              validator: Validatorless.multiple([
+                                Validatorless.required("Email obrigatório"),
+                                Validatorless.email("Email inválido"),
+                              ]),
                             ),
 
                             const SizedBox(
@@ -45,8 +79,13 @@ class LoginPage extends StatelessWidget {
                             ),
                       
                             TodoListField(
+                              controller: _passwordEC,
                               label: "Senha",
                               obscureText: true,
+                              validator: Validatorless.multiple([
+                                Validatorless.required("Senha obrigatória"),
+                                Validatorless.min(6, "Senha deve conter pelo menos 6 caracteres"),
+                              ]),
                             ),
 
                             const SizedBox(
@@ -66,7 +105,16 @@ class LoginPage extends StatelessWidget {
                                 ),
 
                                 ElevatedButton(
-                                  onPressed: () {
+                                  onPressed: () async {
+
+                                    final formValid = _formKey.currentState?.validate() ?? false;
+
+                                    final email = _emailEC.text;
+                                    final password = _passwordEC.text;
+
+                                    if(formValid) {
+                                      context.read<LoginController>().login(email, password);
+                                    }
 
                                   }, 
                                   child: const Padding(
