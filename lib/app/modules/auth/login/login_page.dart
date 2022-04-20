@@ -33,7 +33,8 @@ class _LoginPageState extends State<LoginPage> {
     ).listener(
       context: context, 
       successCallback: (notifier, listenerNotifier) {
-        listenerNotifier.dispose();
+        //listenerNotifier.dispose();
+        print("Funfou");
       },
       everCallback: (notifier, listenerNotifier) {
         if(notifier is LoginController && notifier.hasInfo) {
@@ -178,8 +179,8 @@ class _LoginPageState extends State<LoginPage> {
                                 borderRadius: BorderRadius.circular(30),
                                 borderSide: BorderSide.none,
                               ),
-                              onPressed: () {
-                                
+                              onPressed: () async {
+                                await context.read<LoginController>().googleLogin();
                               },
                             ),
                             Row(

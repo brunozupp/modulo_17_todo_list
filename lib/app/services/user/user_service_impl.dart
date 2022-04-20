@@ -25,5 +25,15 @@ class UserServiceImpl implements UserService {
   Future<void> forgotPassword(String email) async {
     await _userRepository.forgotPassoword(email);
   }
+
+  @override
+  Future<User?> googleLogin() async {
+    return await _userRepository.googleLogin();
+  }
+
+  @override
+  Future<void> googleLogout() async {
+    await _userRepository.googleLogout();
+  }
   
 }
