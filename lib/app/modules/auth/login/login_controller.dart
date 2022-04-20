@@ -7,9 +7,13 @@ class LoginController extends DefaultChangeNotifier {
 
   final UserService _userService;
 
+  String? infoMessage;
+
   LoginController({
     required UserService userService,
   }) : _userService = userService;
+
+  bool get hasInfo => infoMessage != null;
 
   Future<void> login(String email, String password) async {
 
@@ -31,5 +35,34 @@ class LoginController extends DefaultChangeNotifier {
       hideLoading();
       notifyListeners();
     }
+  }
+
+  Future<void> forgotPassword(String email) async {
+    try {
+      showLoadingAndResetState();
+
+      notifyListeners();
+      
+      await _userService.forgotPassword(email);
+
+      infoMessage = "Reset de senha enviado para seu email";
+
+    } on AuthException catch (e) {
+      setError(e.message);
+    
+    } on Exception {
+      setError("Erro ao resetar a senha");
+      
+    } finally {
+      hideLoading();
+      notifyListeners();
+    }
+  }
+
+  @override
+  void showLoadingAndResetState() {
+    super.showLoadingAndResetState();
+
+    infoMessage = null;
   }
 }

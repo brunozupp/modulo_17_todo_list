@@ -20,5 +20,10 @@ class UserServiceImpl implements UserService {
   Future<User?> login(String email, String password) async {
     return await _userRepository.login(email, password);
   }
+
+  @override
+  Future<void> forgotPassword(String email) async {
+    await _userRepository.forgotPassoword(email);
+  }
   
 }

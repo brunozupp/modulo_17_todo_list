@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:modulo_17_todo_list/app/core/notifier/default_listener_notifier.dart';
+import 'package:modulo_17_todo_list/app/core/ui/messages.dart';
 import 'package:modulo_17_todo_list/app/core/widgets/todo_list_field.dart';
 import 'package:modulo_17_todo_list/app/core/widgets/todo_list_logo.dart';
 import 'package:modulo_17_todo_list/app/modules/auth/login/login_controller.dart';
@@ -21,6 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailEC = TextEditingController();
   final _passwordEC = TextEditingController();
+  final _emailFocus = FocusNode();
 
   @override
   void initState() {
@@ -32,6 +34,11 @@ class _LoginPageState extends State<LoginPage> {
       context: context, 
       successCallback: (notifier, listenerNotifier) {
         listenerNotifier.dispose();
+      },
+      everCallback: (notifier, listenerNotifier) {
+        if(notifier is LoginController && notifier.hasInfo) {
+          Messages.of(context).showInfo(notifier.infoMessage!);
+        }
       }
     );
   }
@@ -67,6 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             TodoListField(
                               controller: _emailEC,
+                              focusNode: _emailFocus,
                               label: "Email",
                               validator: Validatorless.multiple([
                                 Validatorless.required("Email obrigatório"),
@@ -98,6 +106,12 @@ class _LoginPageState extends State<LoginPage> {
                                 TextButton(
                                   onPressed: () {
 
+                                    if(_emailEC.text.isNotEmpty) {
+                                      context.read<LoginController>().forgotPassword(_emailEC.text);
+                                    } else {
+                                      _emailFocus.requestFocus();
+                                      Messages.of(context).showInfo("Digite um email para recuperar a senha");
+                                    }
                                   }, 
                                   child: const Text(
                                     "Esqueceu sua senha?",
