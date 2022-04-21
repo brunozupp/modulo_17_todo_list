@@ -32,8 +32,8 @@ class UserServiceImpl implements UserService {
   }
 
   @override
-  Future<void> googleLogout() async {
-    await _userRepository.googleLogout();
+  Future<void> logout() async {
+    await _userRepository.logout();
   }
   
 }
