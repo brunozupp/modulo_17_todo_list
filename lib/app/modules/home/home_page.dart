@@ -36,6 +36,13 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(
+          Icons.add,
+        ),
+        backgroundColor: context.primaryColor,
+      ),
       backgroundColor: const Color(0xFFFAFBFE),
       drawer: const HomePage(),
       body: LayoutBuilder(
