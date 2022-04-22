@@ -11,4 +11,6 @@ abstract class UserService {
   Future<User?> googleLogin();
 
   Future<void> logout();
+
+  Future<void> updateDisplayName(String name);
 }
