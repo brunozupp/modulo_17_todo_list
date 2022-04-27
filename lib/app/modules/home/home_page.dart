@@ -6,11 +6,36 @@ import 'package:modulo_17_todo_list/app/modules/home/widgets/home_filters.dart';
 import 'package:modulo_17_todo_list/app/modules/home/widgets/home_header.dart';
 import 'package:modulo_17_todo_list/app/modules/home/widgets/home_tasks.dart';
 import 'package:modulo_17_todo_list/app/modules/home/widgets/home_week_filter.dart';
+import 'package:modulo_17_todo_list/app/modules/tasks/task_create_page.dart';
+import 'package:modulo_17_todo_list/app/modules/tasks/tasks_module.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
 
   const HomePage({ Key? key }) : super(key: key);
+
+  void _goToCreateTask(BuildContext context) {
+
+    // Fazendo desse jeito pois quero uma navegação com uma animação diferente
+    Navigator.of(context).push(
+      //MaterialPageRoute(builder: (_) => TaskModule().getPage("/task/create", context)),
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return TaskModule().getPage("/task/create", context);
+        },
+        transitionDuration: const Duration(milliseconds: 400),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          animation = CurvedAnimation(parent: animation, curve: Curves.easeInQuad);
+
+          return ScaleTransition(
+            scale: animation,
+            alignment: Alignment.bottomRight,
+            child: child,
+          );
+        }
+      ),
+    );
+  }
 
    @override
    Widget build(BuildContext context) {
@@ -37,7 +62,7 @@ class HomePage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => _goToCreateTask(context),
         child: Icon(
           Icons.add,
         ),

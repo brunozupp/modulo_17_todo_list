@@ -5,6 +5,7 @@ import 'package:modulo_17_todo_list/app/core/ui/todo_list_ui_config.dart';
 import 'package:modulo_17_todo_list/app/modules/auth/auth_module.dart';
 import 'package:modulo_17_todo_list/app/modules/home/home_module.dart';
 import 'package:modulo_17_todo_list/app/modules/splash/splash_page.dart';
+import 'package:modulo_17_todo_list/app/modules/tasks/tasks_module.dart';
 
 class AppWidget extends StatefulWidget {
   const AppWidget({ Key? key }) : super(key: key);
@@ -44,6 +45,7 @@ class _AppWidgetState extends State<AppWidget> {
       routes: {
         ...HomeModule().routers,
         ...AuthModule().routers,
+        ...TaskModule().routers,
       },
       home: const SplashPage(),
     );
