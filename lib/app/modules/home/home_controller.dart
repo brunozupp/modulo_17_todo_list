@@ -22,6 +22,9 @@ class HomeController extends DefaultChangeNotifier {
   List<TaskModel> allTasks = [];
   List<TaskModel> filteredTasks = [];
 
+  DateTime? initialDateOfWeek;
+  DateTime? selectedDay;
+
   Future<void> loadTotalTasks() async {
 
     final allTasks = await Future.wait([
@@ -55,6 +58,7 @@ class HomeController extends DefaultChangeNotifier {
   Future<void> findTasks({
     required TaskFilterEnum filter,
   }) async {
+    
     filterSelected = filter;
 
     showLoading();
@@ -72,6 +76,7 @@ class HomeController extends DefaultChangeNotifier {
         break;
       case TaskFilterEnum.week:
         final weekModel = await _tasksService.getWeek();
+        initialDateOfWeek = weekModel.startDate;
         tasks = weekModel.tasks;
         break;
     }
@@ -79,9 +84,33 @@ class HomeController extends DefaultChangeNotifier {
     filteredTasks = tasks;
     allTasks = tasks;
 
+    if(filter == TaskFilterEnum.week) {
+      if(selectedDay != null) {
+        filterByDay(selectedDay!);
+      } else if(initialDateOfWeek != null) {
+        filterByDay(initialDateOfWeek!);
+      }
+    } else {
+      selectedDay = null;
+    }
+
     hideLoading();
 
     notifyListeners();
+  }
+
+  Future<void> filterByDay(DateTime date) async {
+    selectedDay = date;
+
+    filteredTasks = allTasks.where((task) {
+      return _isSameDate(task.dateTime, date);
+    }).toList();
+
+    notifyListeners();
+  }
+
+  bool _isSameDate(DateTime d1, DateTime d2) {
+    return d1.day == d2.day && d1.month == d2.month && d1.year == d2.year;
   }
 
   Future<void> refreshPage() async {
