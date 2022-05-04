@@ -5,7 +5,9 @@ import 'package:synchronized/synchronized.dart';
 
 class SqliteConnectionFactory {
 
+  // ignore: constant_identifier_names
   static const _VERSION = 1;
+  // ignore: constant_identifier_names
   static const _DATABASE_NAME = "TODO_LIST_PROVIDER";
 
   static SqliteConnectionFactory? _instance;

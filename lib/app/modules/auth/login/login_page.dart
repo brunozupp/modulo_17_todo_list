@@ -33,8 +33,7 @@ class _LoginPageState extends State<LoginPage> {
     ).listener(
       context: context, 
       successCallback: (notifier, listenerNotifier) {
-        //listenerNotifier.dispose();
-        print("Funfou");
+        listenerNotifier.dispose();
       },
       everCallback: (notifier, listenerNotifier) {
         if(notifier is LoginController && notifier.hasInfo) {

@@ -87,10 +87,12 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(
               TodoListIcons.filter,
             ),
+            onSelected: (value) => widget._homeController.showOrHideFinishedTasks(),
             itemBuilder: (_) => <PopupMenuItem<bool>>[
-              const PopupMenuItem<bool>(
+              PopupMenuItem<bool>(
+                value: true,
                 child: Text(
-                  "Mostrar tarefas concluidas",
+                  "${widget._homeController.showFinishedTasks ? 'Esconder' : 'Mostrar'} tarefas concluidas",
                 ),
               ),
             ],
@@ -99,7 +101,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _goToCreateTask(context),
-        child: Icon(
+        child: const Icon(
           Icons.add,
         ),
         backgroundColor: context.primaryColor,
@@ -115,13 +117,13 @@ class _HomePageState extends State<HomePage> {
                 minWidth: constraints.maxWidth,
               ),
               child: Container(
-                margin: EdgeInsets.symmetric(
+                margin: const EdgeInsets.symmetric(
                   horizontal: 20,
                 ),
                 child: IntrinsicHeight(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: const [
                       HomeHeader(),
                       HomeFilters(),
                       HomeWeekFilter(),

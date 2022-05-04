@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:modulo_17_todo_list/app/core/notifier/default_change_notifier.dart';
 import 'package:modulo_17_todo_list/app/exceptions/auth_exception.dart';
 import 'package:modulo_17_todo_list/app/services/user/user_service.dart';

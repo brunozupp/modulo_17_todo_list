@@ -9,6 +9,7 @@ import 'package:modulo_17_todo_list/app/services/user/user_service.dart';
 import 'package:modulo_17_todo_list/app/services/user/user_service_impl.dart';
 import 'package:provider/provider.dart';
 
+// ignore: slash_for_doc_comments
 /**
  * Vai ficar todas as configurações genéricas da aplicação.
  * Então tudo que for compartilhado dentro da aplicação vai ficar aqui dentro.
