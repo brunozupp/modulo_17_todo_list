@@ -29,6 +29,8 @@ class HomeController extends DefaultChangeNotifier {
 
   Future<void> loadTotalTasks() async {
 
+    print("Oi");
+
     final allTasks = await Future.wait([
       _tasksService.getToday(),
       _tasksService.getTomorrow(),
@@ -88,9 +90,9 @@ class HomeController extends DefaultChangeNotifier {
 
     if(filter == TaskFilterEnum.week) {
       if(selectedDay != null) {
-        filterByDay(selectedDay!);
+        await filterByDay(selectedDay!);
       } else if(initialDateOfWeek != null) {
-        filterByDay(initialDateOfWeek!);
+        await filterByDay(initialDateOfWeek!);
       }
     } else {
       selectedDay = null;

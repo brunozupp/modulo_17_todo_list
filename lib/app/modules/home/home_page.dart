@@ -124,10 +124,10 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
-                      HomeHeader(),
-                      HomeFilters(),
-                      HomeWeekFilter(),
-                      HomeTasks(),
+                      // HomeHeader(),
+                      // HomeFilters(),
+                      // HomeWeekFilter(),
+                      // HomeTasks(),
                     ],
                   ),
                 ),
