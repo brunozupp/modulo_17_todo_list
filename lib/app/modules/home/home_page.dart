@@ -1,18 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:modulo_17_todo_list/app/core/auth/auth_provider.dart';
+
 import 'package:modulo_17_todo_list/app/core/ui/theme_extensions.dart';
 import 'package:modulo_17_todo_list/app/core/ui/todo_list_icons.dart';
+import 'package:modulo_17_todo_list/app/modules/home/home_controller.dart';
+import 'package:modulo_17_todo_list/app/modules/home/widgets/home_drawer.dart';
 import 'package:modulo_17_todo_list/app/modules/home/widgets/home_filters.dart';
 import 'package:modulo_17_todo_list/app/modules/home/widgets/home_header.dart';
 import 'package:modulo_17_todo_list/app/modules/home/widgets/home_tasks.dart';
 import 'package:modulo_17_todo_list/app/modules/home/widgets/home_week_filter.dart';
-import 'package:modulo_17_todo_list/app/modules/tasks/task_create_page.dart';
 import 'package:modulo_17_todo_list/app/modules/tasks/tasks_module.dart';
-import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
 
-  const HomePage({ Key? key }) : super(key: key);
+  final HomeController _homeController;
+
+  const HomePage({
+    Key? key,
+    required HomeController homeController,
+  }) : 
+  _homeController = homeController,
+  super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    widget._homeController.loadTotalTasks();
+  }
 
   void _goToCreateTask(BuildContext context) {
 
@@ -69,7 +89,7 @@ class HomePage extends StatelessWidget {
         backgroundColor: context.primaryColor,
       ),
       backgroundColor: const Color(0xFFFAFBFE),
-      drawer: const HomePage(),
+      drawer: HomeDrawer(),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
