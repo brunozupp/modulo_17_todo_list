@@ -10,7 +10,6 @@ class HomeFilters extends StatelessWidget {
 
   const HomeFilters({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return Column(

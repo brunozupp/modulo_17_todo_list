@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:modulo_17_todo_list/app/core/notifier/default_listener_notifier.dart';
 
 import 'package:modulo_17_todo_list/app/core/ui/theme_extensions.dart';
 import 'package:modulo_17_todo_list/app/core/ui/todo_list_icons.dart';
+import 'package:modulo_17_todo_list/app/models/task_filter_enum.dart';
 import 'package:modulo_17_todo_list/app/modules/home/home_controller.dart';
 import 'package:modulo_17_todo_list/app/modules/home/widgets/home_drawer.dart';
 import 'package:modulo_17_todo_list/app/modules/home/widgets/home_filters.dart';
@@ -31,13 +33,25 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    widget._homeController.loadTotalTasks();
+    DefaultListenerNotifier(
+      changeNotifier: widget._homeController,
+    ).listener(
+      context: context, 
+      successCallback: (notifier, listenerInstance) {
+        listenerInstance.dispose();
+      },
+    );
+
+    WidgetsBinding.instance?.addPersistentFrameCallback((timeStamp) { 
+      widget._homeController.loadTotalTasks();
+      widget._homeController.findTasks(filter: TaskFilterEnum.today);
+    });
   }
 
-  void _goToCreateTask(BuildContext context) {
+  Future<void> _goToCreateTask(BuildContext context) async {
 
     // Fazendo desse jeito pois quero uma navegação com uma animação diferente
-    Navigator.of(context).push(
+    await Navigator.of(context).push(
       //MaterialPageRoute(builder: (_) => TaskModule().getPage("/task/create", context)),
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) {
@@ -55,6 +69,8 @@ class _HomePageState extends State<HomePage> {
         }
       ),
     );
+
+    widget._homeController.refreshPage();
   }
 
    @override
