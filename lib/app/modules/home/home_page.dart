@@ -42,9 +42,11 @@ class _HomePageState extends State<HomePage> {
       },
     );
 
-    WidgetsBinding.instance?.addPersistentFrameCallback((timeStamp) { 
-      widget._homeController.loadTotalTasks();
-      widget._homeController.findTasks(filter: TaskFilterEnum.today);
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) { 
+      Future.wait([
+        widget._homeController.loadTotalTasks(),
+        widget._homeController.findTasks(filter: TaskFilterEnum.today),
+      ]);
     });
   }
 
@@ -124,10 +126,10 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
-                      // HomeHeader(),
-                      // HomeFilters(),
-                      // HomeWeekFilter(),
-                      // HomeTasks(),
+                      HomeHeader(),
+                      HomeFilters(),
+                      HomeWeekFilter(),
+                      HomeTasks(),
                     ],
                   ),
                 ),

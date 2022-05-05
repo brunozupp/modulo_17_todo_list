@@ -12,7 +12,12 @@ class HomeHeader extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: Selector<AuthProvider,String>(
         selector: (context, authProvider) {
-          return authProvider.user?.displayName ?? "Não informado";
+
+          if(authProvider.user?.displayName != null && authProvider.user!.displayName!.isNotEmpty) {
+            return authProvider.user!.displayName!;
+          }
+
+          return "Não informado";
         },
         builder: (context,displayName,child) {
           return Text(

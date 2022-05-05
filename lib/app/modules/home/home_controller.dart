@@ -99,7 +99,7 @@ class HomeController extends DefaultChangeNotifier {
     }
 
     if(!showFinishedTasks) {
-      filteredTasks = filteredTasks.where((task) => task.finished).toList();
+      filteredTasks = filteredTasks.where((task) => !task.finished).toList();
     }
 
     hideLoading();
