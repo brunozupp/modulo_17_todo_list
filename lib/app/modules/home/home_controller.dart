@@ -29,8 +29,6 @@ class HomeController extends DefaultChangeNotifier {
 
   Future<void> loadTotalTasks() async {
 
-    print("Oi");
-
     final allTasks = await Future.wait([
       _tasksService.getToday(),
       _tasksService.getTomorrow(),
