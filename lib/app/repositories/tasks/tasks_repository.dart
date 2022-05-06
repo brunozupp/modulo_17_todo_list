@@ -15,4 +15,6 @@ abstract class TasksRepository {
   });
 
   Future<void> checkOrUncheckTask(TaskModel task);
+
+  Future<void> deleteTask(int id);
 }

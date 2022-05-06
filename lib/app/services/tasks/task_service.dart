@@ -16,4 +16,6 @@ abstract class TasksService {
   Future<WeekTaskModel> getWeek(String userId);
 
   Future<void> checkOrUncheckTask(TaskModel task);
+
+  Future<void> deleteTask(int id);
 }

@@ -38,6 +38,51 @@ class Task extends StatelessWidget {
             value: task.finished, 
             onChanged: (value) => context.read<HomeController>().checkOrUnchekTask(task),
           ),
+          trailing: IconButton(
+            onPressed: () async {
+
+              final canDelete = await showDialog<bool?>(
+                context: context, 
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text("Deletar task"),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Text("Essa ação não poderá ser desfeita"),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(false), 
+                        child: const Text(
+                          "VOLTAR",
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(true), 
+                        child: const Text(
+                          "DELETAR",
+                          style: TextStyle(
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }
+              ) ?? false;
+
+              if(canDelete) {
+                await context.read<HomeController>().deleteTask(task.id);
+              }
+
+            }, 
+            icon: const Icon(
+              Icons.delete_forever,
+              size: 30,
+            )
+          ),
           title: Text(
             task.description,
             style: TextStyle(

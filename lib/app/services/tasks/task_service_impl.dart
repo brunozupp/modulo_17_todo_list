@@ -77,4 +77,9 @@ class TasksServiceImpl implements TasksService {
   Future<void> checkOrUncheckTask(TaskModel task) async {
     await _tasksRepository.checkOrUncheckTask(task);
   }
+
+  @override
+  Future<void> deleteTask(int id) async {
+    await _tasksRepository.deleteTask(id);
+  }
 }
