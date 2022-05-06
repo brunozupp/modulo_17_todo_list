@@ -1,3 +1,4 @@
+import 'package:modulo_17_todo_list/app/core/auth/auth_provider.dart';
 import 'package:modulo_17_todo_list/app/core/notifier/default_change_notifier.dart';
 import 'package:modulo_17_todo_list/app/models/task_filter_enum.dart';
 import 'package:modulo_17_todo_list/app/models/task_model.dart';
@@ -8,10 +9,14 @@ import 'package:modulo_17_todo_list/app/services/tasks/task_service.dart';
 class HomeController extends DefaultChangeNotifier {
 
   final TasksService _tasksService;
-
+  final AuthProvider _authProvider;
+  
   HomeController({
     required TasksService tasksService,
-  }) : _tasksService = tasksService;
+    required AuthProvider authProvider,
+  }) : 
+  _tasksService = tasksService,
+  _authProvider = authProvider;
 
   var filterSelected = TaskFilterEnum.today;
 
@@ -29,10 +34,12 @@ class HomeController extends DefaultChangeNotifier {
 
   Future<void> loadTotalTasks() async {
 
+    final userId = _authProvider.user!.uid;
+
     final allTasks = await Future.wait([
-      _tasksService.getToday(),
-      _tasksService.getTomorrow(),
-      _tasksService.getWeek(),
+      _tasksService.getToday(userId),
+      _tasksService.getTomorrow(userId),
+      _tasksService.getWeek(userId),
     ]);
 
     final todayTasks = allTasks[0] as List<TaskModel>;
@@ -69,15 +76,17 @@ class HomeController extends DefaultChangeNotifier {
 
     List<TaskModel> tasks;
 
+    final userId = _authProvider.user!.uid;
+
     switch(filter) {
       case TaskFilterEnum.today:
-        tasks = await _tasksService.getToday();
+        tasks = await _tasksService.getToday(userId);
         break;
       case TaskFilterEnum.tomorrow:
-        tasks = await _tasksService.getTomorrow();
+        tasks = await _tasksService.getTomorrow(userId);
         break;
       case TaskFilterEnum.week:
-        final weekModel = await _tasksService.getWeek();
+        final weekModel = await _tasksService.getWeek(userId);
         initialDateOfWeek = weekModel.startDate;
         tasks = weekModel.tasks;
         break;

@@ -4,13 +4,9 @@ import 'package:sqflite_common/sqlite_api.dart';
 class MigrationV3 implements Migration {
 
   @override
-  void create(Batch batch) {
-    batch.execute("CREATE TABLE teste2(id integer)");
-  }
+  void create(Batch batch) { }
 
   @override
-  void update(Batch batch) {
-    batch.execute("CREATE TABLE teste2(id integer)");
-  }
+  void update(Batch batch) { }
 
 }

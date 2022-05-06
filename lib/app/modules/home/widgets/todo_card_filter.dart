@@ -63,12 +63,23 @@ class TodoCardFilter extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "${totalTasksModel?.totalTasks ?? 0} TASKS",
-              style: context.titleStyle.copyWith(
-                fontSize: 10,
-                color: selected ? Colors.white : Colors.grey,
-              ),
+            Selector<HomeController, int>(
+              selector: (context, controller) {
+                if(controller.showFinishedTasks) {
+                  return totalTasksModel?.totalTasks ?? 0;
+                }
+
+                return (totalTasksModel?.totalTasks ?? 0) - (totalTasksModel?.totalTasksFinish ?? 0);
+              },
+              builder: (context, total, child) {
+                return Text(
+                  "$total TASKS",
+                  style: context.titleStyle.copyWith(
+                    fontSize: 10,
+                    color: selected ? Colors.white : Colors.grey,
+                  ),
+                );
+              }, 
             ),
             Text(
               label,

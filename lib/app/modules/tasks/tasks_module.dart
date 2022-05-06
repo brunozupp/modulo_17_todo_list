@@ -24,6 +24,7 @@ class TaskModule extends TodoListModule {
       ChangeNotifierProvider(
         create: (context) => TaskCreateController(
           tasksService: context.read(),
+          authProvider: context.read(),
         ),
       ),
     ],

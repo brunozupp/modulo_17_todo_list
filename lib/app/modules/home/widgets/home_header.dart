@@ -20,10 +20,16 @@ class HomeHeader extends StatelessWidget {
           return "Não informado";
         },
         builder: (context,displayName,child) {
-          return Text(
-            "E ai, $displayName!",
-            style: context.textTheme.headline5?.copyWith(
-              fontWeight: FontWeight.bold,
+          return GestureDetector(
+            onTap: () {
+              var id = context.read<AuthProvider>().user?.uid;
+              print("ID DO USUÁRIO: $id");
+            },
+            child: Text(
+              "E ai, $displayName!",
+              style: context.textTheme.headline5?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
           );
         }
