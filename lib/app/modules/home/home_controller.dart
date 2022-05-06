@@ -121,6 +121,10 @@ class HomeController extends DefaultChangeNotifier {
       return _isSameDate(task.dateTime, date);
     }).toList();
 
+    if(!showFinishedTasks) {
+      filteredTasks = filteredTasks.where((task) => !task.finished).toList();
+    }
+
     notifyListeners();
   }
 
